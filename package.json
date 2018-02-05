@@ -1,6 +1,6 @@
 {
   "name": "deneric",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Serialize and deserialize JSON to Entity",
   "main": "./src/index.js",
   "scripts": {
