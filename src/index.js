@@ -127,9 +127,9 @@ class Entity {
     }
 }
 
-export const generic = {
+export const deneric = {
     ..._instance,
     Entity
 }
 
-export default generic
+export default deneric

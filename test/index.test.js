@@ -1,14 +1,14 @@
-import generic from '../src/index.js'
+import deneric from '../src/index.js'
 import assert from 'assert'
 
-class BeautifulEntity extends generic.Entity {
+class BeautifulEntity extends deneric.Entity {
     constructor(data) {
         super(data, {
-            username: ['name', generic.String],
-            password: ['pass', generic.String],
-            displayName: ['profile.display_name', generic.String],
-            age: ['profile.age_int', generic.Number],
-            active: ['status_desc.is_active', generic.Boolean]
+            username: ['name', deneric.String],
+            password: ['pass', deneric.String],
+            displayName: ['profile.display_name', deneric.String],
+            age: ['profile.age_int', deneric.Number],
+            active: ['status_desc.is_active', deneric.Boolean]
         })
     }
 }
@@ -54,7 +54,7 @@ describe('MISC Generic', () => {
                 ...data,
                 name: ''
             })
-            assert.equal(tmp.username, generic.DefaultValue.String)
+            assert.equal(tmp.username, deneric.DefaultValue.String)
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
@@ -68,7 +68,7 @@ describe('MISC Generic', () => {
                 pass: ''
             })
             assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, generic.DefaultValue.String)
+            assert.equal(tmp.password, deneric.DefaultValue.String)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
@@ -82,8 +82,8 @@ describe('MISC Generic', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, generic.DefaultValue.String)
-            assert.equal(tmp.age, generic.DefaultValue.Number)
+            assert.equal(tmp.displayName, deneric.DefaultValue.String)
+            assert.equal(tmp.age, deneric.DefaultValue.Number)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
@@ -100,7 +100,7 @@ describe('MISC Generic', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, generic.DefaultValue.String)
+            assert.equal(tmp.displayName, deneric.DefaultValue.String)
             assert.equal(tmp.age, 14)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
@@ -116,7 +116,7 @@ describe('MISC Generic', () => {
                 ...data,
                 name: 1
             })
-            assert.equal(tmp.username, generic.DefaultValue.String)
+            assert.equal(tmp.username, deneric.DefaultValue.String)
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
@@ -130,7 +130,7 @@ describe('MISC Generic', () => {
                 pass: true
             })
             assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, generic.DefaultValue.String)
+            assert.equal(tmp.password, deneric.DefaultValue.String)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
@@ -144,8 +144,8 @@ describe('MISC Generic', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, generic.DefaultValue.String)
-            assert.equal(tmp.age, generic.DefaultValue.Number)
+            assert.equal(tmp.displayName, deneric.DefaultValue.String)
+            assert.equal(tmp.age, deneric.DefaultValue.Number)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
@@ -164,7 +164,7 @@ describe('MISC Generic', () => {
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
-            assert.equal(tmp.active, generic.DefaultValue.Boolean)
+            assert.equal(tmp.active, deneric.DefaultValue.Boolean)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
                 status_desc: {
@@ -188,11 +188,11 @@ describe('MISC Generic', () => {
 
         function checkInitAndSerialize(dataInit) {
             let tmp = new BeautifulEntity(dataInit)
-            assert.equal(tmp.username, generic.DefaultValue.String)
-            assert.equal(tmp.password, generic.DefaultValue.String)
-            assert.equal(tmp.displayName, generic.DefaultValue.String)
-            assert.equal(tmp.age, generic.DefaultValue.Number)
-            assert.equal(tmp.active, generic.DefaultValue.Boolean)
+            assert.equal(tmp.username, deneric.DefaultValue.String)
+            assert.equal(tmp.password, deneric.DefaultValue.String)
+            assert.equal(tmp.displayName, deneric.DefaultValue.String)
+            assert.equal(tmp.age, deneric.DefaultValue.Number)
+            assert.equal(tmp.active, deneric.DefaultValue.Boolean)
             assert.deepEqual(tmp.serialize, serialize)
         }
         it('Undefined', () => {
