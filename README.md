@@ -1,0 +1,2 @@
+# deneric
+JS Generic
