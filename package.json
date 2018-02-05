@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd"
   },
-  "author": "duydb",
+  "author": "duydb <duydbvn@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.5"
