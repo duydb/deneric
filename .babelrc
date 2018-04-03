@@ -5,5 +5,7 @@
     "plugins": [
         "transform-runtime",
         "transform-object-rest-spread"
-    ]
+    ],
+    "sourceMaps": true,
+    "retainLines": true
 }

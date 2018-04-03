@@ -1,5 +1,19 @@
-import deneric from '../src/index.js'
-import assert from 'assert'
+const deneric = require('../deneric.js')
+const assert = require('assert')
+const mocha = require('mocha')
+// const assert from 'assert'
+
+const describe = mocha.describe
+
+class ChildEntity extends deneric.Entity {
+    constructor(data) {
+        super(data, {
+            name: ['child_name', deneric.String],
+            age: ['profile.age', deneric.Number],
+            active: ['profile.is_active', deneric.Boolean]
+        })
+    }
+}
 
 class BeautifulEntity extends deneric.Entity {
     constructor(data) {
@@ -8,11 +22,13 @@ class BeautifulEntity extends deneric.Entity {
             password: ['pass', deneric.String],
             displayName: ['profile.display_name', deneric.String],
             age: ['profile.age_int', deneric.Number],
-            active: ['status_desc.is_active', deneric.Boolean]
+            active: ['status_desc.is_active', deneric.Boolean],
+            child: ['child.info', ChildEntity]
         })
     }
 }
-describe('MISC Generic', () => {
+
+describe('Deneric Unit Test', () => {
     describe('valid data init', () => {
         const data = {
             username: 'user123',
@@ -26,6 +42,17 @@ describe('MISC Generic', () => {
             status_desc: {
                 is_active: true,
                 is_deactive: false
+            },
+            child: {
+                extras: [1, 2],
+                info: {
+                    child_name: 'Son 1',
+                    profile: {
+                        age: 12,
+                        is_active: true,
+                        is_deactive: false
+                    }
+                }
             }
         }
         const serialize = {
@@ -37,6 +64,15 @@ describe('MISC Generic', () => {
             },
             status_desc: {
                 is_active: true
+            },
+            child: {
+                info: {
+                    child_name: 'Son 1',
+                    profile: {
+                        age: 12,
+                        is_active: true
+                    }
+                }
             }
         }
 
@@ -52,9 +88,9 @@ describe('MISC Generic', () => {
         it('Missing data', () => {
             let tmp = new BeautifulEntity({
                 ...data,
-                name: ''
+                name: undefined
             })
-            assert.equal(tmp.username, deneric.DefaultValue.String)
+            assert.equal(tmp.username, deneric.DefaultValue[deneric.String])
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
@@ -68,7 +104,7 @@ describe('MISC Generic', () => {
                 pass: ''
             })
             assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, deneric.DefaultValue.String)
+            assert.equal(tmp.password, deneric.DefaultValue[deneric.String])
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
@@ -82,7 +118,7 @@ describe('MISC Generic', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, deneric.DefaultValue.String)
+            assert.equal(tmp.displayName, deneric.DefaultValue[deneric.String])
             assert.equal(tmp.age, deneric.DefaultValue.Number)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
@@ -90,24 +126,6 @@ describe('MISC Generic', () => {
                 profile: {
                     display_name: '',
                     age_int: 0
-                }
-            })
-            tmp = new BeautifulEntity({
-                ...data,
-                profile: {
-                    age_int: '14'
-                }
-            })
-            assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, deneric.DefaultValue.String)
-            assert.equal(tmp.age, 14)
-            assert.equal(tmp.active, data.status_desc.is_active)
-            assert.deepStrictEqual(tmp.serialize, {
-                ...serialize,
-                profile: {
-                    display_name: '',
-                    age_int: 14
                 }
             })
         })
@@ -183,6 +201,15 @@ describe('MISC Generic', () => {
             },
             status_desc: {
                 is_active: false
+            },
+            child: {
+                info: {
+                    child_name: '',
+                    profile: {
+                        age: 0,
+                        is_active: false
+                    }
+                }
             }
         }
 
@@ -205,11 +232,11 @@ describe('MISC Generic', () => {
             checkInitAndSerialize([1, 2, 3, '4', true])
             checkInitAndSerialize([])
         })
-
         it('Object', () => {
             checkInitAndSerialize({
                 'name': 1,
-                'username': 'test'
+                'username': 'test',
+                child: [1, 2, 3]
             })
             checkInitAndSerialize({})
         })

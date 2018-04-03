@@ -1,10 +1,26 @@
 {
   "name": "deneric",
-  "version": "0.0.1",
-  "description": "Serialize and deserialize JSON to Entity",
-  "main": "./src/index.js",
+  "version": "0.1.0-beta",
+  "description": "Serialization and deserialization JSON to Entity",
+  "main": "deneric.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:duydb/deneric.git"
+  },
+  "keywords": [
+    "deneric",
+    "Serialize",
+    "deserialize",
+    "JSON",
+    "Serialize and deserialize"
+  ],
+  "bugs": {
+    "url": "https://github.com/duydb/deneric/issues"
+  },
+  "homepage": "https://github.com/duydb/deneric",
   "scripts": {
-    "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd"
+    "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
+    "debug": "node ./node_modules/mocha/bin/mocha --nolazy --inspect-brk=9229 ./test/index.test.js"
   },
   "author": "duydb <duydbvn@gmail.com>",
   "license": "ISC",
@@ -13,11 +29,12 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
