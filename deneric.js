@@ -39,7 +39,6 @@ const VALIDATE = {
 }
 
 const _instance = Object.assign(DATA_TYPE, {
-    ...DATA_TYPE,
     DefaultValue: DEFAULT_VALUE,
     Parser: PARSER,
     Validate: VALIDATE,
@@ -119,6 +118,9 @@ class Entity {
     }
 }
 
-module.exports = Object.assign({
-    Entity
-}, _instance)
+const deneric = Object.assign(_instance, {
+    Entity: Entity
+})
+
+module.exports = deneric
+export default deneric
