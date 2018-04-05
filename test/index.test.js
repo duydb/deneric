@@ -1,4 +1,4 @@
-const deneric = require('../deneric.js')
+const deneric = require('../source/index.js')
 const assert = require('assert')
 const mocha = require('mocha')
 // const assert from 'assert'

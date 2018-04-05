@@ -1,4 +1,4 @@
-const _ = require('lodash')
+import lodash from 'lodash'
 
 const DATA_TYPE = {
     String: 'String',
@@ -122,5 +122,4 @@ const deneric = Object.assign(_instance, {
     Entity: Entity
 })
 
-module.exports = deneric
 export default deneric
