@@ -1,4 +1,4 @@
-import lodash from 'lodash'
+import _ from 'lodash'
 
 const DATA_TYPE = {
     String: 'String',
@@ -20,6 +20,28 @@ const DEFAULT_VALUE = {
 
 const PARSER = {
     default: value => value,
+    arrayEntities: (dataType, value) => {
+        let res = []
+        value = _.isArray(value) ? value : []
+        for (let i = 0; i < value.length; i++) {
+            if (_.isFunction(dataType[i % dataType.length])) {
+                res.push(new dataType[i % dataType.length](value[i]))
+            }
+        }
+        return res
+    },
+    objectEntities: (dataType, value) => {
+        let res = {}
+        dataType = _.isObject(dataType) ? dataType : {}
+        value = _.isObject(dataType) ? dataType : {}
+        for (let k in dataType) {
+            if (_.isFunction(dataType[k])) {
+                res[k] = new dataType[k](value[k])
+                res.push(new dataType[i % dataType.length](value[i]))
+            }
+        }
+        return res
+    },
     [DATA_TYPE.String]: value => value,
     [DATA_TYPE.Number]: value => value,
     [DATA_TYPE.Boolean]: value => value,
@@ -38,14 +60,32 @@ const VALIDATE = {
     [DATA_TYPE.Any]: () => true
 }
 
-const _instance = Object.assign(DATA_TYPE, {
+const _instance = {
+    ...DATA_TYPE,
     DefaultValue: DEFAULT_VALUE,
     Parser: PARSER,
     Validate: VALIDATE,
     parseValue(value, dataType, defaultValue, parser, validate) {
         let res
+
+        if (_.isArray(dataType) && _.isEmpty(dataType)) {
+            dataType = DATA_TYPE.Array
+        } else if (_.isObject(dataType) && _.isEmpty(dataType)) {
+            dataType = DATA_TYPE.Object
+        }
+
         if (_.isFunction(dataType)) {
             res = new dataType(value)
+        } else if (_.isArray(dataType) && !_.isEmpty(dataType)) {
+            defaultValue = defaultValue || DEFAULT_VALUE[DATA_TYPE.Array]
+            parser = parser || PARSER.arrayEntities
+            validate = validate || VALIDATE[DATA_TYPE.Array]
+            res = validate(value) ? parser(value) : defaultValue
+        } else if (_.isObject(dataType) && !_.isEmpty(dataType)) {
+            defaultValue = defaultValue || DEFAULT_VALUE[DATA_TYPE.Object]
+            parser = parser || PARSER.objectEntities
+            validate = validate || VALIDATE[DATA_TYPE.Object]
+            res = validate(value) ? parser(value) : defaultValue
         } else {
             defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[dataType]) ? DEFAULT_VALUE[dataType] : DEFAULT_VALUE.default)
             parser = parser || (!_.isUndefined(PARSER[dataType]) ? PARSER[dataType] : PARSER.default)
@@ -87,7 +127,7 @@ const _instance = Object.assign(DATA_TYPE, {
         }
         return object
     }
-})
+}
 
 class Entity {
     constructor(data, mapping) {
@@ -118,8 +158,7 @@ class Entity {
     }
 }
 
-const deneric = Object.assign(_instance, {
-    Entity: Entity
-})
-
-export default deneric
+export default {
+    ..._instance,
+    Entity
+}

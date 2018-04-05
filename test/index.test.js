@@ -1,6 +1,6 @@
-const deneric = require('../source/index.js')
-const assert = require('assert')
-const mocha = require('mocha')
+import deneric from '../source/index';
+import assert from 'assert'
+import mocha from 'mocha'
 // const assert from 'assert'
 
 const describe = mocha.describe

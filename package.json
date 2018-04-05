@@ -1,6 +1,6 @@
 {
   "name": "deneric",
-  "version": "0.1.1-beta",
+  "version": "0.1.5-beta",
   "description": "Serialization and deserialization JSON to Entity",
   "main": "./distribution/index.js",
   "repository": {
