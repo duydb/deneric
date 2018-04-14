@@ -7,7 +7,11 @@ const DATA_TYPE = {
     Object: 'Object',
     Array: 'Array',
     Any: 'Any',
+    ArrayEntity: 'ArrayEntity',
+    MapEntity: 'MapEntity',
+    Entity: 'Entity',
 }
+
 const DEFAULT_VALUE = {
     default: undefined,
     [DATA_TYPE.String]: '',
@@ -15,12 +19,15 @@ const DEFAULT_VALUE = {
     [DATA_TYPE.Boolean]: false,
     [DATA_TYPE.Object]: {},
     [DATA_TYPE.Array]: [],
+    [DATA_TYPE.ArrayEntity]: [],
+    [DATA_TYPE.MapEntity]: {},
+    [DATA_TYPE.Entity]: {},
     [DATA_TYPE.Any]: undefined,
 }
 
 const PARSER = {
     default: value => value,
-    arrayEntities: (dataType, value) => {
+    [DATA_TYPE.ArrayEntity](value, dataType) {
         let res = []
         value = _.isArray(value) ? value : []
         for (let i = 0; i < value.length; i++) {
@@ -30,7 +37,7 @@ const PARSER = {
         }
         return res
     },
-    objectEntities: (dataType, value) => {
+    [DATA_TYPE.MapEntity](value, dataType) {
         let res = {}
         dataType = _.isObject(dataType) ? dataType : {}
         value = _.isObject(dataType) ? dataType : {}
@@ -41,6 +48,9 @@ const PARSER = {
             }
         }
         return res
+    },
+    [DATA_TYPE.Entity](value, dataType) {
+        return new dataType(value)
     },
     [DATA_TYPE.String]: value => value,
     [DATA_TYPE.Number]: value => value,
@@ -57,6 +67,9 @@ const VALIDATE = {
     [DATA_TYPE.Boolean]: _.isBoolean,
     [DATA_TYPE.Object]: _.isObject,
     [DATA_TYPE.Array]: _.isArray,
+    [DATA_TYPE.Entity]: () => true,
+    [DATA_TYPE.ArrayEntity]: _.isArray,
+    [DATA_TYPE.MapEntity]: _.isObject,
     [DATA_TYPE.Any]: () => true
 }
 
@@ -67,31 +80,19 @@ const _instance = {
     Validate: VALIDATE,
     parseValue(value, dataType, defaultValue, parser, validate) {
         let res
-
-        if (_.isArray(dataType) && _.isEmpty(dataType)) {
-            dataType = DATA_TYPE.Array
-        } else if (_.isObject(dataType) && _.isEmpty(dataType)) {
-            dataType = DATA_TYPE.Object
-        }
-
+        let pureDataType = dataType
         if (_.isFunction(dataType)) {
-            res = new dataType(value)
-        } else if (_.isArray(dataType) && !_.isEmpty(dataType)) {
-            defaultValue = defaultValue || DEFAULT_VALUE[DATA_TYPE.Array]
-            parser = parser || PARSER.arrayEntities
-            validate = validate || VALIDATE[DATA_TYPE.Array]
-            res = validate(value) ? parser(value) : defaultValue
-        } else if (_.isObject(dataType) && !_.isEmpty(dataType)) {
-            defaultValue = defaultValue || DEFAULT_VALUE[DATA_TYPE.Object]
-            parser = parser || PARSER.objectEntities
-            validate = validate || VALIDATE[DATA_TYPE.Object]
-            res = validate(value) ? parser(value) : defaultValue
-        } else {
-            defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[dataType]) ? DEFAULT_VALUE[dataType] : DEFAULT_VALUE.default)
-            parser = parser || (!_.isUndefined(PARSER[dataType]) ? PARSER[dataType] : PARSER.default)
-            validate = validate || (!_.isUndefined(VALIDATE[dataType]) ? VALIDATE[dataType] : VALIDATE.default)
-            res = validate(value) ? parser(value) : defaultValue
+            pureDataType = DATA_TYPE.Entity
+        } else if (_.isArray(dataType)) {
+            pureDataType = _.isEmpty(dataType) ? DATA_TYPE.Array : DATA_TYPE.ArrayEntity
+        } else if (_.isObject(dataType)) {
+            pureDataType = _.isEmpty(dataType) ? DATA_TYPE.Object : DATA_TYPE.MapEntity
         }
+        defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[pureDataType]) ? DEFAULT_VALUE[pureDataType] : DEFAULT_VALUE.default)
+        parser = parser || (!_.isUndefined(PARSER[pureDataType]) ? PARSER[pureDataType] : PARSER.default)
+        validate = validate || (!_.isUndefined(VALIDATE[pureDataType]) ? VALIDATE[pureDataType] : VALIDATE.default)
+        res = validate(value) ? parser(value, dataType) : defaultValue
+        res = validate(value) ? parser(value) : defaultValue
         return res
     },
     selectValue(object, address, dataType, defaultValue, parser, validate) {
@@ -117,7 +118,7 @@ const _instance = {
             tmpObj = tmpObj[key]
         }
         if (stackKeys[0]) {
-            if (_.isFunction(dataType) && value instanceof Entity) {
+            if (_.isFunction(dataType) && _.isObject(value) && value.serialize) {
                 tmpObj[stackKeys[0]] = value.serialize
             } else {
                 defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[dataType]) ? DEFAULT_VALUE[dataType] : DEFAULT_VALUE.default)
@@ -153,6 +154,15 @@ class Entity {
             let [address, dataType, defaultValue, parser, validate] = _.isArray(this._mapping[k]) ? this._mapping[k] : []
             let item = _.isArray(this._mapping[k]) ? this._mapping[k] : []
             _instance.setValue(res, address, dataType, this[k], defaultValue, validate)
+        }
+        return res
+    }
+    get deserialize() {
+        let res = {}
+        for (let k in this._mapping) {
+            let [address, dataType, defaultValue, parser, validate] = _.isArray(this._mapping[k]) ? this._mapping[k] : []
+            let item = _.isArray(this._mapping[k]) ? this._mapping[k] : []
+            _instance.setValue(res, k, dataType, this[k], defaultValue, validate)
         }
         return res
     }

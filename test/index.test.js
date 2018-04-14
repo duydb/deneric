@@ -84,6 +84,7 @@ describe('Deneric Unit Test', () => {
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, serialize)
+            assert.deepStrictEqual(tmp.child.serialize, serialize.child.info)
         })
         it('Missing data', () => {
             let tmp = new BeautifulEntity({
