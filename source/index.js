@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const DATA_TYPE = {
+export const DATA_TYPE = {
     String: 'String',
     Number: 'Number',
     Boolean: 'Boolean',
@@ -12,7 +12,7 @@ const DATA_TYPE = {
     Entity: 'Entity',
 }
 
-const DEFAULT_VALUE = {
+export const DEFAULT_VALUE = {
     default: undefined,
     [DATA_TYPE.String]: '',
     [DATA_TYPE.Number]: 0,
@@ -25,7 +25,7 @@ const DEFAULT_VALUE = {
     [DATA_TYPE.Any]: undefined,
 }
 
-const PARSER = {
+export const PARSER = {
     default: value => value,
     [DATA_TYPE.ArrayEntity](value, dataType) {
         let res = []
@@ -59,7 +59,7 @@ const PARSER = {
     [DATA_TYPE.Any]: value => value
 }
 
-const VALIDATE = {
+export const VALIDATE = {
     default: () => false,
     [DATA_TYPE.String]: _.isString,
     [DATA_TYPE.Number]: _.isNumber,
@@ -72,7 +72,7 @@ const VALIDATE = {
     [DATA_TYPE.Any]: () => true
 }
 
-const GET_VALUE = {
+export const GET_VALUE = {
     default: value => value,
     [DATA_TYPE.String]: value => value,
     [DATA_TYPE.Number]: value => value,
@@ -159,7 +159,7 @@ const _instance = {
     }
 }
 
-class Entity {
+export class Entity {
     constructor(data, mapping) {
         this._parsingData(data, mapping)
     }
@@ -195,8 +195,6 @@ class Entity {
         return res
     }
 }
-
-export Entity
 
 export default {
     ..._instance,
