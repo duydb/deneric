@@ -40,11 +40,10 @@ const PARSER = {
     [DATA_TYPE.MapEntity](value, dataType) {
         let res = {}
         dataType = _.isObject(dataType) ? dataType : {}
-        value = _.isObject(dataType) ? dataType : {}
+        value = _.isObject(value) ? value : {}
         for (let k in dataType) {
             if (_.isFunction(dataType[k])) {
                 res[k] = new dataType[k](value[k])
-                res.push(new dataType[i % dataType.length](value[i]))
             }
         }
         return res
@@ -73,6 +72,25 @@ const VALIDATE = {
     [DATA_TYPE.Any]: () => true
 }
 
+const GET_VALUE = {
+    default: value => value,
+    [DATA_TYPE.String]: value => value,
+    [DATA_TYPE.Number]: value => value,
+    [DATA_TYPE.Boolean]: value => value,
+    [DATA_TYPE.Object]: value => value,
+    [DATA_TYPE.Array]: value => value,
+    [DATA_TYPE.Entity]: value => value.serialize,
+    [DATA_TYPE.ArrayEntity]: value => value.map(item => item.serialize),
+    [DATA_TYPE.MapEntity]: value => {
+        let res = {}
+        for (let k in value) {
+            res[k] = value[k].serialize
+        }
+        return res
+    },
+    [DATA_TYPE.Any]: value => value
+}
+
 const _instance = {
     ...DATA_TYPE,
     DefaultValue: DEFAULT_VALUE,
@@ -92,7 +110,6 @@ const _instance = {
         parser = parser || (!_.isUndefined(PARSER[pureDataType]) ? PARSER[pureDataType] : PARSER.default)
         validate = validate || (!_.isUndefined(VALIDATE[pureDataType]) ? VALIDATE[pureDataType] : VALIDATE.default)
         res = validate(value) ? parser(value, dataType) : defaultValue
-        res = validate(value) ? parser(value) : defaultValue
         return res
     },
     selectValue(object, address, dataType, defaultValue, parser, validate) {
@@ -118,15 +135,27 @@ const _instance = {
             tmpObj = tmpObj[key]
         }
         if (stackKeys[0]) {
-            if (_.isFunction(dataType) && _.isObject(value) && value.serialize) {
-                tmpObj[stackKeys[0]] = value.serialize
-            } else {
-                defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[dataType]) ? DEFAULT_VALUE[dataType] : DEFAULT_VALUE.default)
-                validate = validate || (!_.isUndefined(VALIDATE[dataType]) ? VALIDATE[dataType] : VALIDATE.default)
-                tmpObj[stackKeys[0]] = validate(value) ? value : defaultValue
-            }
+            tmpObj[stackKeys[0]] = this.getValue(dataType, value, defaultValue, validate)
         }
         return object
+    },
+    getPureType(dataType) {
+        let pureDataType = dataType
+        if (_.isFunction(dataType)) {
+            pureDataType = DATA_TYPE.Entity
+        } else if (_.isArray(dataType)) {
+            pureDataType = _.isEmpty(dataType) ? DATA_TYPE.Array : DATA_TYPE.ArrayEntity
+        } else if (_.isObject(dataType)) {
+            pureDataType = _.isEmpty(dataType) ? DATA_TYPE.Object : DATA_TYPE.MapEntity
+        }
+        return pureDataType
+    },
+    getValue(dataType, value, defaultValue, validate) {
+        let pureDataType = this.getPureType(dataType)
+        let getValueFunc = GET_VALUE[pureDataType] || GET_VALUE.default
+        defaultValue = defaultValue || (!_.isUndefined(DEFAULT_VALUE[pureDataType]) ? DEFAULT_VALUE[pureDataType] : DEFAULT_VALUE.default)
+        validate = validate || (!_.isUndefined(VALIDATE[pureDataType]) ? VALIDATE[pureDataType] : VALIDATE.default)
+        return validate(value) ? getValueFunc(value) : defaultValue
     }
 }
 
@@ -152,7 +181,6 @@ class Entity {
         let res = {}
         for (let k in this._mapping) {
             let [address, dataType, defaultValue, parser, validate] = _.isArray(this._mapping[k]) ? this._mapping[k] : []
-            let item = _.isArray(this._mapping[k]) ? this._mapping[k] : []
             _instance.setValue(res, address, dataType, this[k], defaultValue, validate)
         }
         return res
@@ -167,6 +195,8 @@ class Entity {
         return res
     }
 }
+
+export Entity
 
 export default {
     ..._instance,

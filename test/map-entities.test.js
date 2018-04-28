@@ -8,15 +8,16 @@ const info = {
 
 const data = {
     name: 'array Info',
-    items: [{
+    data: {
+        user1: {
             name: 'A',
             age: 1
         },
-        {
-            name: 'A',
-            age: 2
+        user2: {
+            name: 'B',
+            company: 'Company A'
         }
-    ]
+    }
 }
 
 class Info extends deneric.Entity {
@@ -28,19 +29,30 @@ class Info extends deneric.Entity {
     }
 }
 
-class ListInfo extends deneric.Entity {
+class Info2 extends deneric.Entity {
     constructor(data) {
         super(data, {
             name: ['name', deneric.String],
-            items: ['items', [Info]]
+            company: ['company', deneric.String]
+        })
+    }
+}
+
+class MapInfo extends deneric.Entity {
+    constructor(data) {
+        super(data, {
+            name: ['name', deneric.String],
+            items: ['data', {
+                user1: Info,
+                user2: Info2,
+            }]
         })
     }
 }
 
 describe('Array Entities', () => {
     it('Should success when parsing all items of data', () => {
-        var a = new ListInfo(data)
-        assert.equal(a.items.length, data.items.length)
+        var a = new MapInfo(data)
         assert.deepEqual(a.serialize, data)
     })
 })

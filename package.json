@@ -1,8 +1,8 @@
 {
   "name": "deneric",
-  "version": "0.1.5-beta",
+  "version": "0.2.1-beta",
   "description": "Serialization and deserialization JSON to Entity",
-  "main": "./distribution/index.js",
+  "main": "./source/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:duydb/deneric.git"
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/duydb/deneric",
   "scripts": {
     "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
-    "build": "babel source --out-dir distribution",
+    "build": "babel source --out-dir dist",
     "prepublish": "npm run build",
     "debug": "node ./node_modules/mocha/bin/mocha --nolazy --inspect-brk=9229 ./test/index.test.js"
   },
