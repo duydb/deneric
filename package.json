@@ -2,7 +2,7 @@
   "name": "deneric",
   "version": "0.2.5-beta",
   "description": "Serialization and deserialization JSON to Entity",
-  "main": "source/index.js",
+  "main": "./source/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:duydb/deneric.git"
