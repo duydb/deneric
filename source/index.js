@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export const DATA_TYPE = {
+const DATA_TYPE = {
     String: 'String',
     Number: 'Number',
     Boolean: 'Boolean',
@@ -12,7 +12,7 @@ export const DATA_TYPE = {
     Entity: 'Entity',
 }
 
-export const DEFAULT_VALUE = {
+const DEFAULT_VALUE = {
     default: undefined,
     [DATA_TYPE.String]: '',
     [DATA_TYPE.Number]: 0,
@@ -25,7 +25,7 @@ export const DEFAULT_VALUE = {
     [DATA_TYPE.Any]: undefined,
 }
 
-export const PARSER = {
+const PARSER = {
     default: value => value,
     [DATA_TYPE.ArrayEntity](value, dataType) {
         let res = []
@@ -59,7 +59,7 @@ export const PARSER = {
     [DATA_TYPE.Any]: value => value
 }
 
-export const VALIDATE = {
+const VALIDATE = {
     default: () => false,
     [DATA_TYPE.String]: _.isString,
     [DATA_TYPE.Number]: _.isNumber,
@@ -72,7 +72,7 @@ export const VALIDATE = {
     [DATA_TYPE.Any]: () => true
 }
 
-export const GET_VALUE = {
+const GET_VALUE = {
     default: value => value,
     [DATA_TYPE.String]: value => value,
     [DATA_TYPE.Number]: value => value,
@@ -92,7 +92,12 @@ export const GET_VALUE = {
 }
 
 const _instance = {
-    ...DATA_TYPE,
+    String: DATA_TYPE.String,
+    Number: DATA_TYPE.Number,
+    Boolean: DATA_TYPE.Boolean,
+    Object: DATA_TYPE.Object,
+    Array: DATA_TYPE.Array,
+    Any: DATA_TYPE.Any,
     DefaultValue: DEFAULT_VALUE,
     Parser: PARSER,
     Validate: VALIDATE,
@@ -196,7 +201,6 @@ export class Entity {
     }
 }
 
-export default {
-    ..._instance,
-    Entity
-}
+_instance.Entity = Entity
+
+export default _instance

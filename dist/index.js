@@ -3,13 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Entity = exports.GET_VALUE = exports.VALIDATE = exports.PARSER = exports.DEFAULT_VALUE = exports.DATA_TYPE = undefined;
+exports.Entity = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _DEFAULT_VALUE, _PARSER, _VALIDATE, _GET_VALUE;
 
@@ -23,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var DATA_TYPE = exports.DATA_TYPE = {
+var DATA_TYPE = {
     String: 'String',
     Number: 'Number',
     Boolean: 'Boolean',
@@ -35,11 +33,11 @@ var DATA_TYPE = exports.DATA_TYPE = {
     Entity: 'Entity'
 };
 
-var DEFAULT_VALUE = exports.DEFAULT_VALUE = (_DEFAULT_VALUE = {
+var DEFAULT_VALUE = (_DEFAULT_VALUE = {
     default: undefined
 }, _defineProperty(_DEFAULT_VALUE, DATA_TYPE.String, ''), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Number, 0), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Boolean, false), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Object, {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Array, []), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.ArrayEntity, []), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.MapEntity, {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Entity, {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Any, undefined), _DEFAULT_VALUE);
 
-var PARSER = exports.PARSER = (_PARSER = {
+var PARSER = (_PARSER = {
     default: function _default(value) {
         return value;
     }
@@ -78,7 +76,7 @@ var PARSER = exports.PARSER = (_PARSER = {
     return value;
 }), _PARSER);
 
-var VALIDATE = exports.VALIDATE = (_VALIDATE = {
+var VALIDATE = (_VALIDATE = {
     default: function _default() {
         return false;
     }
@@ -88,7 +86,7 @@ var VALIDATE = exports.VALIDATE = (_VALIDATE = {
     return true;
 }), _VALIDATE);
 
-var GET_VALUE = exports.GET_VALUE = (_GET_VALUE = {
+var GET_VALUE = (_GET_VALUE = {
     default: function _default(value) {
         return value;
     }
@@ -118,7 +116,13 @@ var GET_VALUE = exports.GET_VALUE = (_GET_VALUE = {
     return value;
 }), _GET_VALUE);
 
-var _instance = _extends({}, DATA_TYPE, {
+var _instance = {
+    String: DATA_TYPE.String,
+    Number: DATA_TYPE.Number,
+    Boolean: DATA_TYPE.Boolean,
+    Object: DATA_TYPE.Object,
+    Array: DATA_TYPE.Array,
+    Any: DATA_TYPE.Any,
     DefaultValue: DEFAULT_VALUE,
     Parser: PARSER,
     Validate: VALIDATE,
@@ -183,7 +187,7 @@ var _instance = _extends({}, DATA_TYPE, {
         validate = validate || (!_lodash2.default.isUndefined(VALIDATE[pureDataType]) ? VALIDATE[pureDataType] : VALIDATE.default);
         return validate(value) ? getValueFunc(value) : defaultValue;
     }
-});
+};
 
 var Entity = exports.Entity = function () {
     function Entity(data, mapping) {
@@ -257,6 +261,6 @@ var Entity = exports.Entity = function () {
     return Entity;
 }();
 
-exports.default = _extends({}, _instance, {
-    Entity: Entity
-});
+_instance.Entity = Entity;
+
+exports.default = _instance;
