@@ -1,4 +1,6 @@
-import deneric from '../source/index';
+import deneric, {
+    DEFAULT_VALUE
+} from '../source/index';
 import assert from 'assert'
 import mocha from 'mocha'
 // const assert from 'assert'
@@ -91,7 +93,7 @@ describe('Deneric Unit Test', () => {
                 ...data,
                 name: undefined
             })
-            assert.equal(tmp.username, deneric.DefaultValue[deneric.String])
+            assert.equal(tmp.username, DEFAULT_VALUE[deneric.String])
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
@@ -105,7 +107,7 @@ describe('Deneric Unit Test', () => {
                 pass: ''
             })
             assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, deneric.DefaultValue[deneric.String])
+            assert.equal(tmp.password, DEFAULT_VALUE[deneric.String])
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
@@ -119,8 +121,8 @@ describe('Deneric Unit Test', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, deneric.DefaultValue[deneric.String])
-            assert.equal(tmp.age, deneric.DefaultValue.Number)
+            assert.equal(tmp.displayName, DEFAULT_VALUE[deneric.String])
+            assert.equal(tmp.age, DEFAULT_VALUE.Number)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
@@ -135,7 +137,7 @@ describe('Deneric Unit Test', () => {
                 ...data,
                 name: 1
             })
-            assert.equal(tmp.username, deneric.DefaultValue.String)
+            assert.equal(tmp.username, DEFAULT_VALUE.String)
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
@@ -149,7 +151,7 @@ describe('Deneric Unit Test', () => {
                 pass: true
             })
             assert.equal(tmp.username, data.name)
-            assert.equal(tmp.password, deneric.DefaultValue.String)
+            assert.equal(tmp.password, DEFAULT_VALUE.String)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
             assert.equal(tmp.active, data.status_desc.is_active)
@@ -163,8 +165,8 @@ describe('Deneric Unit Test', () => {
             })
             assert.equal(tmp.username, data.name)
             assert.equal(tmp.password, data.pass)
-            assert.equal(tmp.displayName, deneric.DefaultValue.String)
-            assert.equal(tmp.age, deneric.DefaultValue.Number)
+            assert.equal(tmp.displayName, DEFAULT_VALUE.String)
+            assert.equal(tmp.age, DEFAULT_VALUE.Number)
             assert.equal(tmp.active, data.status_desc.is_active)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
@@ -183,7 +185,7 @@ describe('Deneric Unit Test', () => {
             assert.equal(tmp.password, data.pass)
             assert.equal(tmp.displayName, data.profile.display_name)
             assert.equal(tmp.age, data.profile.age_int)
-            assert.equal(tmp.active, deneric.DefaultValue.Boolean)
+            assert.equal(tmp.active, DEFAULT_VALUE.Boolean)
             assert.deepStrictEqual(tmp.serialize, {
                 ...serialize,
                 status_desc: {
@@ -216,11 +218,11 @@ describe('Deneric Unit Test', () => {
 
         function checkInitAndSerialize(dataInit) {
             let tmp = new BeautifulEntity(dataInit)
-            assert.equal(tmp.username, deneric.DefaultValue.String)
-            assert.equal(tmp.password, deneric.DefaultValue.String)
-            assert.equal(tmp.displayName, deneric.DefaultValue.String)
-            assert.equal(tmp.age, deneric.DefaultValue.Number)
-            assert.equal(tmp.active, deneric.DefaultValue.Boolean)
+            assert.equal(tmp.username, DEFAULT_VALUE.String)
+            assert.equal(tmp.password, DEFAULT_VALUE.String)
+            assert.equal(tmp.displayName, DEFAULT_VALUE.String)
+            assert.equal(tmp.age, DEFAULT_VALUE.Number)
+            assert.equal(tmp.active, DEFAULT_VALUE.Boolean)
             assert.deepEqual(tmp.serialize, serialize)
         }
         it('Undefined', () => {

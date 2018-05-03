@@ -92,15 +92,6 @@ const GET_VALUE = {
 }
 
 const _instance = {
-    String: DATA_TYPE.String,
-    Number: DATA_TYPE.Number,
-    Boolean: DATA_TYPE.Boolean,
-    Object: DATA_TYPE.Object,
-    Array: DATA_TYPE.Array,
-    Any: DATA_TYPE.Any,
-    DefaultValue: DEFAULT_VALUE,
-    Parser: PARSER,
-    Validate: VALIDATE,
     parseValue(value, dataType, defaultValue, parser, validate) {
         let res
         let pureDataType = dataType
@@ -164,7 +155,7 @@ const _instance = {
     }
 }
 
-export class Entity {
+class Entity {
     constructor(data, mapping) {
         this._parsingData(data, mapping)
     }
@@ -201,6 +192,23 @@ export class Entity {
     }
 }
 
-_instance.Entity = Entity
+export default {
+    String: DATA_TYPE.String,
+    Number: DATA_TYPE.Number,
+    Boolean: DATA_TYPE.Boolean,
+    Object: DATA_TYPE.Object,
+    Array: DATA_TYPE.Array,
+    Any: DATA_TYPE.Any,
+    Entity: Entity,
+    selectValue: (...args) => _instance.selectValue(...args),
+    getValue: (...args) => _instance.getValue(...args),
+    parseValue: (...args) => _instance.parseValue(...args)
+}
 
-export default _instance
+export {
+    Entity,
+    DEFAULT_VALUE,
+    PARSER,
+    VALIDATE,
+    DATA_TYPE
+}

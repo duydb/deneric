@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Entity = undefined;
+exports.DATA_TYPE = exports.VALIDATE = exports.PARSER = exports.DEFAULT_VALUE = exports.Entity = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -117,15 +117,6 @@ var GET_VALUE = (_GET_VALUE = {
 }), _GET_VALUE);
 
 var _instance = {
-    String: DATA_TYPE.String,
-    Number: DATA_TYPE.Number,
-    Boolean: DATA_TYPE.Boolean,
-    Object: DATA_TYPE.Object,
-    Array: DATA_TYPE.Array,
-    Any: DATA_TYPE.Any,
-    DefaultValue: DEFAULT_VALUE,
-    Parser: PARSER,
-    Validate: VALIDATE,
     parseValue: function parseValue(value, dataType, defaultValue, parser, validate) {
         var res = void 0;
         var pureDataType = dataType;
@@ -189,7 +180,7 @@ var _instance = {
     }
 };
 
-var Entity = exports.Entity = function () {
+var Entity = function () {
     function Entity(data, mapping) {
         _classCallCheck(this, Entity);
 
@@ -261,6 +252,26 @@ var Entity = exports.Entity = function () {
     return Entity;
 }();
 
-_instance.Entity = Entity;
-
-exports.default = _instance;
+exports.default = {
+    String: DATA_TYPE.String,
+    Number: DATA_TYPE.Number,
+    Boolean: DATA_TYPE.Boolean,
+    Object: DATA_TYPE.Object,
+    Array: DATA_TYPE.Array,
+    Any: DATA_TYPE.Any,
+    Entity: Entity,
+    selectValue: function selectValue() {
+        return _instance.selectValue.apply(_instance, arguments);
+    },
+    getValue: function getValue() {
+        return _instance.getValue.apply(_instance, arguments);
+    },
+    parseValue: function parseValue() {
+        return _instance.parseValue.apply(_instance, arguments);
+    }
+};
+exports.Entity = Entity;
+exports.DEFAULT_VALUE = DEFAULT_VALUE;
+exports.PARSER = PARSER;
+exports.VALIDATE = VALIDATE;
+exports.DATA_TYPE = DATA_TYPE;
