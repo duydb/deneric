@@ -22,17 +22,26 @@
     "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
     "build": "babel source --out-dir dist",
     "prepublish": "npm run build",
-    "debug": "node ./node_modules/mocha/bin/mocha --nolazy --inspect-brk=9229 ./test/index.test.js"
+    "debug": "node ./node_modules/mocha/bin/mocha --require babel-core/register --nolazy --inspect-brk=9229 ./test/array-entities.test.js",
+    "lint": "eslint --ext .js src test"
   },
   "author": "duydb <duydbvn@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "lodash": "^4.17.5"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
     "mocha": "^5.0.0"
   }
 }

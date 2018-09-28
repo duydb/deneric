@@ -1,14 +1,10 @@
 module.exports = {
   root: true,
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module"
+  parserOptions: {
+    parser: 'babel-eslint'
   },
   "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "mocha": true
+    "browser": true
   },
   "extends": ["standard"],
   "rules": {

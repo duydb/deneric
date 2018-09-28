@@ -1,6 +1,6 @@
 import deneric, {
     DEFAULT_VALUE
-} from '../source/index';
+} from '../source/index'
 import assert from 'assert'
 import mocha from 'mocha'
 // const assert from 'assert'
