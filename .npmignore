@@ -1,11 +1,12 @@
-.*.swp
-._*
+# dependencies
+/node_modules
+
+# misc
+.vscode
 .DS_Store
-.hg
-.npmrc
-.lock-wscript
-.svn
-.wafpickle-*
-config.gypi
-CVS
-npm-debug.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
