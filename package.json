@@ -1,38 +1,38 @@
 {
-  "name": "deneric",
-  "version": "1.0.0-beta",
-  "description": "Serialization and deserialization JSON to Entity",
-  "main": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:duydb/deneric.git"
-  },
-  "keywords": [
-    "deneric",
-    "Serialize",
-    "deserialize",
-    "JSON",
-    "Serialize and deserialize"
-  ],
-  "bugs": {
-    "url": "https://github.com/duydb/deneric/issues"
-  },
-  "homepage": "https://github.com/duydb/deneric",
-  "scripts": {
-    "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
-    "build": "babel source --out-dir dist",
-    "prepublish": "npm run build",
-    "debug": "node ./node_modules/mocha/bin/mocha --nolazy --inspect-brk=9229 ./test/index.test.js"
-  },
-  "author": "duydb <duydbvn@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "lodash": "^4.17.5"
-  },
-  "devDependencies": {
-    "mocha": "^5.0.0"
-  }
+    "name": "deneric",
+    "version": "1.0.1-beta",
+    "description": "Serialization and deserialization JSON to Entity",
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:duydb/deneric.git"
+    },
+    "keywords": [
+        "deneric",
+        "Serialize",
+        "deserialize",
+        "JSON",
+        "Serialize and deserialize"
+    ],
+    "bugs": {
+        "url": "https://github.com/duydb/deneric/issues"
+    },
+    "homepage": "https://github.com/duydb/deneric",
+    "scripts": {
+        "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
+        "build": "babel source --out-dir dist",
+        "prepublish": "npm run build",
+        "debug": "node ./node_modules/mocha/bin/mocha --nolazy --inspect-brk=9229 ./test/index.test.js"
+    },
+    "author": "duydb <duydbvn@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "lodash": "^4.17.5"
+    },
+    "devDependencies": {
+        "mocha": "^5.0.0"
+    }
 }
