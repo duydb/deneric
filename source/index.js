@@ -112,12 +112,8 @@ const _instance = {
         object = _.isObject(object) ? object : {}
         dataType = dataType || this.String
         address = _.isString(address) ? address : ''
-        let stackKeys = address.split('.').reverse()
-        let tmpObj = object
-        while (stackKeys.length) {
-            tmpObj = tmpObj[stackKeys.pop()] || {}
-        }
-        return this.parseValue(tmpObj, dataType, defaultValue, parser, validate)
+        let value = _.get(object, address)
+        return this.parseValue(value, dataType, defaultValue, parser, validate)
     },
     setValue(object, address, dataType, value, defaultValue, validate) {
         object = _.isObject(object) ? object : {}
