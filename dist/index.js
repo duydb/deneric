@@ -151,12 +151,8 @@ var _instance = {
         object = _lodash2.default.isObject(object) ? object : {};
         dataType = dataType || this.String;
         address = _lodash2.default.isString(address) ? address : '';
-        var stackKeys = address.split('.').reverse();
-        var tmpObj = object;
-        while (stackKeys.length) {
-            tmpObj = tmpObj[stackKeys.pop()] || {};
-        }
-        return this.parseValue(tmpObj, dataType, defaultValue, parser, validate);
+        var value = _lodash2.default.get(object, address);
+        return this.parseValue(value, dataType, defaultValue, parser, validate);
     },
     setValue: function setValue(object, address, dataType, value, defaultValue, validate) {
         object = _lodash2.default.isObject(object) ? object : {};

@@ -17,11 +17,11 @@ const DEFAULT_VALUE = {
     [DATA_TYPE.String]: () => '',
     [DATA_TYPE.Number]: () => 0,
     [DATA_TYPE.Boolean]: () => false,
-    [DATA_TYPE.Object]: () => {},
+    [DATA_TYPE.Object]: () => ({}),
     [DATA_TYPE.Array]: () => [],
     [DATA_TYPE.ArrayEntity]: () => [],
-    [DATA_TYPE.MapEntity]: () => {},
-    [DATA_TYPE.Entity]: () => {},
+    [DATA_TYPE.MapEntity]: () => ({}),
+    [DATA_TYPE.Entity]: () => ({}),
     [DATA_TYPE.Any]: () => undefined
 }
 
