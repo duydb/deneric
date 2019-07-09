@@ -119,11 +119,11 @@ var GET_VALUE = (_GET_VALUE = {
 }), _defineProperty(_GET_VALUE, DATA_TYPE.Object, function (value) {
     return Object.assign({}, value);
 }), _defineProperty(_GET_VALUE, DATA_TYPE.Array, function (value) {
-    return [].concat(value);
+    return [].concat();
 }), _defineProperty(_GET_VALUE, DATA_TYPE.Entity, function (value) {
     return value.serialize;
 }), _defineProperty(_GET_VALUE, DATA_TYPE.ArrayEntity, function (value) {
-    return value.map(function (item) {
+    return value.concat().map(function (item) {
         return item.serialize;
     });
 }), _defineProperty(_GET_VALUE, DATA_TYPE.MapEntity, function (value) {
