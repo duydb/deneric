@@ -78,9 +78,9 @@ const GET_VALUE = {
     [DATA_TYPE.Number]: value => value,
     [DATA_TYPE.Boolean]: value => value,
     [DATA_TYPE.Object]: value => Object.assign({}, value),
-    [DATA_TYPE.Array]: value => [].concat(value),
+    [DATA_TYPE.Array]: value => [].concat(),
     [DATA_TYPE.Entity]: value => value.serialize,
-    [DATA_TYPE.ArrayEntity]: value => value.map(item => item.serialize),
+    [DATA_TYPE.ArrayEntity]: value => value.concat().map(item => item.serialize),
     [DATA_TYPE.MapEntity]: value => {
         let res = {}
         for (let k in value) {

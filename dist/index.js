@@ -43,11 +43,17 @@ var DEFAULT_VALUE = (_DEFAULT_VALUE = {
     return 0;
 }), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Boolean, function () {
     return false;
-}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Object, function () {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Array, function () {
+}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Object, function () {
+    return {};
+}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Array, function () {
     return [];
 }), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.ArrayEntity, function () {
     return [];
-}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.MapEntity, function () {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Entity, function () {}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Any, function () {
+}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.MapEntity, function () {
+    return {};
+}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Entity, function () {
+    return {};
+}), _defineProperty(_DEFAULT_VALUE, DATA_TYPE.Any, function () {
     return undefined;
 }), _DEFAULT_VALUE);
 
