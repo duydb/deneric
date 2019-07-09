@@ -21,7 +21,8 @@
     "scripts": {
         "test": "mocha --require babel-core/register --watch --watch-extensions babel-core --recursive --ui bdd",
         "build": "babel source --out-dir dist",
-        "prepublish": "npm run build && npm set registry https://registry.npmjs.org",
+        "prepublish": "npm run build",
+        "publish": "npm set registry https://registry.npmjs.org && npm publish",
         "debug": "node ./node_modules/mocha/bin/mocha --require babel-core/register --nolazy --inspect-brk=9229 ./test/default_value.test.js"
     },
     "author": "duydb <duydbvn@gmail.com>",
