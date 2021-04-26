@@ -3,6 +3,7 @@
     "version": "1.0.6-beta",
     "description": "Serialization and deserialization JSON to Entity",
     "main": "dist/index.js",
+    "types": "types/index.d.ts",
     "repository": {
         "type": "git",
         "url": "git@github.com:duydb/deneric.git"
